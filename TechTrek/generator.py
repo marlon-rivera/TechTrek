@@ -1,8 +1,10 @@
 import numpy as np
 from scipy.stats import norm
 from scipy.stats import chi2
-
+from flask import Flask, request, jsonify
 #Util
+
+app = Flask(__name__)
 
 def truncate(number):
   """
@@ -471,20 +473,31 @@ def generateNumbersTested(Xo, k, c, g, min, max, quantity, nIntervals):
 
   return ri_result[0:quantity], xi_result, ni_result
 
-
-from datetime import datetime
+"""
 import csv
 import os
 while True:
   
-  if(os.path.getsize("numbers.csv") != 0):
+  if(os.path.getsize("./Assets/data/numbers.csv") != 0):
      continue
   seed = datetime.now().microsecond
   seed = list(str(seed))
   seed = list(map(int, seed))
   ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 1, 10)
-  with open("numbers.csv", mode='w', newline='') as archivo:
+  with open("./Assets/data/numbers.csv", mode='w', newline='') as archivo:
     escritor_csv = csv.writer(archivo)
     escritor_csv.writerow(ri)
-    
-  print(ri)
+"""    
+from datetime import datetime
+
+@app.route("/get_number", methods = ["GET"])
+def getNumber():
+  seed = datetime.now().microsecond
+  seed = list(str(seed))
+  seed = list(map(int, seed))
+  ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 1000, 10)
+  return jsonify(ri)
+
+
+if __name__ == "__main__":
+  app.run(debug=True)
