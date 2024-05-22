@@ -13,20 +13,23 @@ public class MovementPlayer : MonoBehaviour
     public float leftBound = -5.0f;
     private GameObject GradePrefab;
     private float LastShoot = 0.0f;
-    private Generator generator;
     private float[] luckOne;
     private float[] luckTwo;
     private float[] luckThree;
+    private int lucky;
 
     void Start()
     {
 
         Rigidbody2D = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
-        generator = GetComponent<Generator>();
         luckOne = new float[] { 0.26f, 0.526f, 0.8f, 0.9f, 1.0f };
         luckTwo = new float[] { 0.1f, 0.37f, 0.64f, 0.91f, 1.0f };
         luckThree = new float[] { 0.1f, 0.2f, 0.47f, 0.74f, 1.0f };
+        Generator.LoadData();
+        lucky = (int) (1 + (3 - 1) * Generator.GetNextNumber());
+
+
     }
 
     void Update()
@@ -71,9 +74,13 @@ public class MovementPlayer : MonoBehaviour
 
     private void Shoot()
     {
-        float randomNumber = generator.Next();
-        int lucky = (int) (generator.Next() * (3 - 1) + 1);
-        getPrefab(lucky, randomNumber);
+        if(Generator.numbers.Count == 0){
+            
+        Generator.LoadData();
+        }
+
+        float randomNumber = Generator.GetNextNumber();
+        getPrefab(randomNumber);
         Vector3 Direction;
         if (transform.localScale.x == 1.0f) Direction = Vector2.right;
         else Direction = Vector2.left;
@@ -92,8 +99,10 @@ public class MovementPlayer : MonoBehaviour
 
     }
 
-    void getPrefab(int lucky, float randomNumber)
+    void getPrefab(float randomNumber)
     {
+        Debug.Log("Prefab: " + randomNumber);
+        Debug.Log("Suerte: " + lucky);
         if (lucky == 1)
         {
             if (randomNumber <= luckOne[0])

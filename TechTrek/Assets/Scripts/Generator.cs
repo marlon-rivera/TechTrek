@@ -1,67 +1,63 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
-
 
 public class Generator : MonoBehaviour
 {
+    public  static List<float> numbers;
+    private static int currentIndex = -1; 
 
-    private string filePath = "Assets/data/numbers.csv";
-
-    void Start()
-    {
-        GetDataFromAPI();
-
+    void Start(){
+        LoadData();
     }
 
- IEnumerator GetDataFromAPI()
+    public static void LoadData()
     {
-        using (UnityWebRequest request = UnityWebRequest.Get("http://localhost:5000/get_number"))
+        string filePath = "Assets/data/numbers.csv";
+        numbers = ReadCsvToFloatList(filePath);
+    }
+    public static float GetNextNumber()
+    {
+        if (numbers == null || numbers.Count == 0)
         {
-            yield return request.SendWebRequest();
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error al obtener datos desde la API: " + request.error);
-            }
-            else
-            {
-                // La solicitud fue exitosa, deserializa los datos JSON
-                string responseData = request.downloadHandler.text;
-                FloatArrayWrapper wrapper = JsonUtility.FromJson<FloatArrayWrapper>(responseData);
-
-                if (wrapper != null && wrapper.data != null)
-                {
-                    // Accede a los datos deserializados
-                    float[] floatArray = wrapper.data;
-                    Debug.Log("Arreglo de flotantes recibido desde la API: " + string.Join(", ", floatArray));
-                }
-                else
-                {
-                    Debug.LogError("Error al deserializar los datos JSON");
-                }
-            }
+            throw new InvalidOperationException("No data loaded. Call LoadData() first.");
         }
+
+        currentIndex = (currentIndex + 1) % numbers.Count;
+        return numbers[currentIndex];
     }
 
-    public float Next()
+    private static List<float> ReadCsvToFloatList(string filePath)
     {
+        List<float> result = new List<float>();
 
-        if (File.Exists(filePath))
+        try
         {
-            string numberGenerated = File.ReadAllText(filePath);
-            numberGenerated = numberGenerated.Replace(".", ",");
-            File.WriteAllText(filePath, string.Empty);
-            Debug.Log(numberGenerated);
-            return float.Parse(numberGenerated);
-        }
-        else
-        {
-            Debug.LogError("El archivo no existe en la ruta especificada: " + filePath);
-            return 0.0f;
-        }
+            string[] lines = File.ReadAllLines(filePath);
 
+            foreach (string line in lines)
+            {
+                string[] values = line.Split(',');
+                foreach (string value in values)
+                {
+                    string numberStr = value.Replace(".", ",");
+                    if (float.TryParse(numberStr, out float number))
+                    {
+                        result.Add(number);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Failed to parse value as float: " + numberStr);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error loading data from CSV: " + e.Message);
+        }
+        Debug.Log("Numeros cargados: " + result[0]);
+        return result;
     }
 }
