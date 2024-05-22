@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
-    public  static List<float> numbers;
+    public  static List<float> numbers = new List<float>();
     private static int currentIndex = -1; 
 
     void Start(){
@@ -57,7 +57,6 @@ public class Generator : MonoBehaviour
         {
             Debug.LogError("Error loading data from CSV: " + e.Message);
         }
-        Debug.Log("Numeros cargados: " + result[0]);
         return result;
     }
 }
