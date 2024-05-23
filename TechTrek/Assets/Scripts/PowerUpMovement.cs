@@ -81,4 +81,9 @@ public class PowerUpMovement : MonoBehaviour
         transform.position = pos;
     }
 
+    public void PlayerTouched()
+    {
+        Destroy(gameObject);
+    }
+
 }
