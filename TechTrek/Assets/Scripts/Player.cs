@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     public int health = 100;
     [SerializeField] Slider sliderLife;
-    private CapsuleCollider2D boxCollider;
+    private BoxCollider2D boxCollider;
     public LayerMask capaSuelo;
 
 
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         lucky = (int)(1 + (3 - 1) * Generator.GetNextNumber());
         sliderLife.maxValue = health;
         sliderLife.value = sliderLife.maxValue;
-        boxCollider = GetComponent<CapsuleCollider2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
 
     }
@@ -226,14 +226,14 @@ public class Player : MonoBehaviour
 
         if (Rigidbody2D.velocity.x > 0)
         {
-            direccionGolpe = new Vector2(-1, 1);
+            direccionGolpe = new Vector2(-1, 0);
         }
         else
         {
-            direccionGolpe = new Vector2(1, 1);
+            direccionGolpe = new Vector2(1, 0);
         }
 
-        Rigidbody2D.AddForce(direccionGolpe * fuerzaGolpe);
+        Rigidbody2D.AddForce(direccionGolpe * fuerzaGolpe, ForceMode2D.Impulse);
 
         StartCoroutine(EsperarYActivarMovimiento());
     }

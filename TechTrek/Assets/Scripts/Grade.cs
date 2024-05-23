@@ -8,6 +8,7 @@ public class Grade : MonoBehaviour
     public float Speed;
     private Vector2 Direction;
     public int damage;
+    
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();

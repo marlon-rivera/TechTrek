@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
-    public  static List<float> numbers = new List<float>();
-    private static int currentIndex = -1; 
+    public static List<float> numbers = new List<float>();
+    private static int currentIndex = -1;
 
-    void Start(){
+    void Start()
+    {
         LoadData();
     }
 
@@ -23,8 +24,7 @@ public class Generator : MonoBehaviour
         {
             throw new InvalidOperationException("No data loaded. Call LoadData() first.");
         }
-
-        currentIndex = (currentIndex + 1) % numbers.Count;
+        currentIndex = (currentIndex + 1);
         return numbers[currentIndex];
     }
 

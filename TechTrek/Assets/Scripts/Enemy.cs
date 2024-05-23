@@ -24,7 +24,8 @@ public class Enemy : MonoBehaviour
 
         frontInfo = Physics2D.Raycast(controlFront.position, transform.right, distanceFront, layerFront);
         bottomInfo = Physics2D.Raycast(controlBottom.position, transform.up * -1, distanceBottom, layerBottom);
-        if (frontInfo || bottomInfo)
+        Debug.Log(bottomInfo);
+        if (frontInfo || !bottomInfo)
         {
             Flip();
         }

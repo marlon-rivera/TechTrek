@@ -41,15 +41,19 @@ public class PowerUpMovement : MonoBehaviour
         {
             case 0:
                 moveDirection = Vector2.up;
+                Debug.Log("Arriba");
                 break;
             case 1:
-                moveDirection = Vector2.down;
+                moveDirection = Vector2.right;
+                Debug.Log("derecha");
                 break;
             case 2:
-                moveDirection = Vector2.left;
+                moveDirection = Vector2.down;
+                Debug.Log("abajo");
                 break;
             case 3:
-                moveDirection = Vector2.right;
+                moveDirection = Vector2.left;
+                Debug.Log("izquierda");
                 break;
         }
         timer = changeDirectionInterval;
