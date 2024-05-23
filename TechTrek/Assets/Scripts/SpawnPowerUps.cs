@@ -81,7 +81,6 @@ public class SpawnPowerUps : MonoBehaviour
         }
         
         
-        Debug.Log(arrivalTime);
         InvokeRepeating("IncreaseTime", 1f, 1f);
     }
 
@@ -92,9 +91,7 @@ public class SpawnPowerUps : MonoBehaviour
     {
         time++;
 
-        Debug.Log("Time: " + time);
-        Debug.Log("PosArrival: " + posArrival);
-        Debug.Log("PosService: " + posService);
+       
         if (posArrival < 4)
         {
             if (time == arrivalTimeSum[posArrival])

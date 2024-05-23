@@ -115,8 +115,8 @@ public class Player : MonoBehaviour
 
     void getPrefab(float randomNumber)
     {
-        Debug.Log("Prefab: " + randomNumber);
-        Debug.Log("Suerte: " + lucky);
+
+
         if (lucky == 1)
         {
             if (randomNumber <= luckOne[0])
@@ -190,10 +190,10 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
+
         if (collision.gameObject.tag == "PowerUp")
         {
-            Debug.Log("Entre a powerup");
+
             Destroy(collision.gameObject);
 
         }
@@ -203,7 +203,6 @@ public class Player : MonoBehaviour
     {
         health -= damage;
         sliderLife.value = health;
-        Debug.Log("Jugador ha recibido daño. Salud restante: " + health);
         if (health <= 0)
         {
 
