@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerUpMovement : MonoBehaviour
 {
 
-   public float moveSpeed = 2f;
+    public float moveSpeed = 2f;
     public float changeDirectionInterval = 1f;
 
     private Vector2 moveDirection;
@@ -16,7 +16,7 @@ public class PowerUpMovement : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width- 50, Screen.height - 50, mainCamera.transform.position.z));
+        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width - 50, Screen.height - 50, mainCamera.transform.position.z));
         ChangeDirection();
     }
 
@@ -35,25 +35,21 @@ public class PowerUpMovement : MonoBehaviour
 
     void ChangeDirection()
     {
-        int direction = (int) (0 + (3 - 0) * Generator.GetNextNumber());
+        int direction = (int)(0 + (3 - 0) * Generator.GetNextNumber());
         
         switch (direction)
         {
             case 0:
-                moveDirection = Vector2.up;
-                Debug.Log("Arriba");
+                moveDirection = Vector2.left;
                 break;
             case 1:
-                moveDirection = Vector2.right;
-                Debug.Log("derecha");
+                moveDirection = Vector2.down;
                 break;
             case 2:
-                moveDirection = Vector2.down;
-                Debug.Log("abajo");
+                moveDirection = Vector2.right;
                 break;
             case 3:
-                moveDirection = Vector2.left;
-                Debug.Log("izquierda");
+                moveDirection = Vector2.up;
                 break;
         }
         timer = changeDirectionInterval;

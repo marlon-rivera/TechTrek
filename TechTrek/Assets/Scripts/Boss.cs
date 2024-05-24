@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : MonoBehaviour
 {
@@ -8,9 +9,12 @@ public class Boss : MonoBehaviour
     private Rigidbody2D rgb2D;
     private Dictionary<string, float[]> transitions;
     private string[] states = { "taller", "parcial", "expo", "proyecto" };
-
     private string currentState;
     private GameObject bombPrefab;
+    private float speed = 3f;
+    private int health;
+    [SerializeField] Slider slider;
+    public Animator animator;
 
     void Start()
     {
@@ -27,6 +31,8 @@ public class Boss : MonoBehaviour
         {
             Generator.LoadData();
         }
+        health = 150;
+        slider.maxValue = health;
     }
 
     private void GetNextState()
@@ -60,9 +66,29 @@ public class Boss : MonoBehaviour
 
     }
 
-    void Update()
+    public void Follow(Vector3 target)
     {
+        Vector3 direction = new Vector3(target.x - transform.position.x, 0, 0).normalized;
+        rgb2D.velocity = new Vector2(direction.x * speed, rgb2D.velocity.y);
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+        else if (direction.x < 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        slider.value = health;
+        Debug.Log(health);
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void SelectBomb()
@@ -83,5 +109,9 @@ public class Boss : MonoBehaviour
         {
             bombPrefab = bombs[3];
         }
+    }
+
+    public Animator GetAnimator(){
+        return animator;
     }
 }

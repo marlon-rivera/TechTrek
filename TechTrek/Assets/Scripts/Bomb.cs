@@ -33,12 +33,21 @@ public class Bomb : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Player player = other.gameObject.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage(damage);
+            }
+
+        }
         Destroy(this.gameObject);
     }
 
-     public void Destroy()
+    public void Destroy()
     {
-        
+
         Destroy(gameObject);
     }
 }

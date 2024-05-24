@@ -17,7 +17,7 @@ public class Grade : MonoBehaviour
 
             Animator animator = this.gameObject.GetComponent<Animator>();
             animator.SetBool("destroy", true);
-            Debug.Log("Destroy: " + animator.GetBool("destroy"));
+            
         }
 
     }
@@ -53,8 +53,13 @@ public class Grade : MonoBehaviour
                 enemy.TakeDamage(damage);
             }
 
+        }else if(other.gameObject.CompareTag("boss")){
+            Boss boss = other.gameObject.GetComponent<Boss>();
+            if (boss != null)
+            {
+                boss.TakeDamage(damage);
+            }
         }
-
         Destroy(this.gameObject);
     }
 }

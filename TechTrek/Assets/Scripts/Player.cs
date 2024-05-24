@@ -19,18 +19,18 @@ public class Player : MonoBehaviour
     private float[] luckTwo;
     private float[] luckThree;
     private int lucky;
-
-    public int health = 100;
+    private int previousLucky;
+    public int health = 150;
     [SerializeField] Slider sliderLife;
     private BoxCollider2D boxCollider;
-    public LayerMask capaSuelo;
+    private bool unassailable = false;
+
 
 
 
 
     void Start()
     {
-
         Rigidbody2D = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
         luckOne = new float[] { 0.26f, 0.526f, 0.8f, 0.9f, 1.0f };
@@ -41,14 +41,11 @@ public class Player : MonoBehaviour
         sliderLife.maxValue = health;
         sliderLife.value = sliderLife.maxValue;
         boxCollider = GetComponent<BoxCollider2D>();
-
-
     }
 
     void Update()
     {
         Horizontal = Input.GetAxisRaw("Horizontal");
-
         if (Horizontal < 0.0f)
         {
             transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
@@ -89,7 +86,6 @@ public class Player : MonoBehaviour
     {
         if (Generator.numbers.Count == 0)
         {
-
             Generator.LoadData();
         }
 
@@ -115,8 +111,6 @@ public class Player : MonoBehaviour
 
     void getPrefab(float randomNumber)
     {
-
-
         if (lucky == 1)
         {
             if (randomNumber <= luckOne[0])
@@ -190,10 +184,16 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.tag == "PowerUp")
         {
-
+            SpawnPowerUps spawnScript = FindObjectOfType<SpawnPowerUps>();
+            Debug.Log(spawnScript);
+            if (spawnScript != null)
+            {
+                spawnScript.ShowPowerUp();
+                string powerupType = spawnScript.GetPowerUpType();
+                ApplyPowerUp(powerupType);
+            }
             Destroy(collision.gameObject);
 
         }
@@ -201,95 +201,66 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        sliderLife.value = health;
-        if (health <= 0)
+        if (!unassailable)
         {
-
-            Destroy(this.gameObject);
+            Debug.Log("Dañooooooo");
+            health -= damage;
+            sliderLife.value = health;
+            if (health <= 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
-    private bool puedeMoverse = true;
-    public float fuerzaGolpe;
-    private bool mirandoDerecha = true;
-
-    public float velocidad;
-
-
-    public void AplicarGolpe()
+    private void ApplyPowerUp(string type)
     {
-
-        puedeMoverse = false;
-
-        Vector2 direccionGolpe;
-
-        if (Rigidbody2D.velocity.x > 0)
+        Debug.Log(type);
+        if (type == "tutoria")
         {
-            direccionGolpe = new Vector2(-1, 0);
+            previousLucky = lucky;
+            if (lucky == 1)
+            {
+                lucky = 2;
+            }
+            else if (lucky == 2)
+            {
+                lucky = 3;
+            }
         }
-        else
+        else if (type == "paro")
         {
-            direccionGolpe = new Vector2(1, 0);
+            unassailable = true;
         }
-
-        Rigidbody2D.AddForce(direccionGolpe * fuerzaGolpe, ForceMode2D.Impulse);
-
-        StartCoroutine(EsperarYActivarMovimiento());
+        else if (type == "festivo")
+        {
+            if (health < 150)
+            {
+                if (health < 150 && health > 130)
+                {
+                    health = 150;
+                }
+                else
+                {
+                    health += 20;
+                }
+                sliderLife.value = health;
+            }
+        }
     }
 
-    IEnumerator EsperarYActivarMovimiento()
+    public void RemovePowerUp(string type)
     {
-        // Esperamos antes de comprobar si esta en el suelo.
-        yield return new WaitForSeconds(0.1f);
-
-        while (!EstaEnSuelo())
+        if (type == "tutoria")
         {
-            // Esperamos al siguiente frame.
-            yield return null;
+            lucky = previousLucky;
+
         }
-
-        // Si ya está en suelo activamos el movimiento.
-        puedeMoverse = true;
-    }
-
-    bool EstaEnSuelo()
-    {
-        RaycastHit2D raycastHit = Physics2D.BoxCast(boxCollider.bounds.center, new Vector2(boxCollider.bounds.size.x, boxCollider.bounds.size.y), 0f, Vector2.down, 0.2f, capaSuelo);
-        return raycastHit.collider != null;
-    }
-
-    void ProcesarMovimiento()
-    {
-        // Si no puede moverse, salimos de la funcion
-        if (!puedeMoverse) return;
-
-        // Lógica de movimiento
-        float inputMovimiento = Input.GetAxis("Horizontal");
-
-        if (inputMovimiento != 0f)
+        else if (type == "paro")
         {
-            Animator.SetBool("running", true);
-        }
-        else
-        {
-            Animator.SetBool("running", false);
-        }
-
-        Rigidbody2D.velocity = new Vector2(inputMovimiento * velocidad, Rigidbody2D.velocity.y);
-
-        GestionarOrientacion(inputMovimiento);
-    }
-
-    void GestionarOrientacion(float inputMovimiento)
-    {
-        // Si se cumple condición
-        if ((mirandoDerecha == true && inputMovimiento < 0) || (mirandoDerecha == false && inputMovimiento > 0))
-        {
-            // Ejecutar código de volteado
-            mirandoDerecha = !mirandoDerecha;
-            transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+            unassailable = false;
         }
     }
+
 }
 
