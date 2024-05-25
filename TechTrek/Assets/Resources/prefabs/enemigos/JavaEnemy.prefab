@@ -216,7 +216,7 @@ MonoBehaviour:
   velocityMovement: 2
   layerFront:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   layerBottom:
     serializedVersion: 2
     m_Bits: 8
@@ -227,6 +227,11 @@ MonoBehaviour:
   bottomInfo: 0
   frontInfo: 0
   lookingForward: 0
+  layerPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  detectionRadius: 0.3
+  attackCooldown: 3
 --- !u!61 &3546068750696346705
 BoxCollider2D:
   m_ObjectHideFlags: 0

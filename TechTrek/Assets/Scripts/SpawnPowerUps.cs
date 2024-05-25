@@ -109,6 +109,7 @@ public class SpawnPowerUps : MonoBehaviour
                 Vector2 spawnPosition = new Vector2((int)(minX + (maxX - minX) * Generator.GetNextNumber() + 100), (int)(minY + (maxY - minY) * Generator.GetNextNumber()));
                 powerRandom = (int)(0 + (powerups.Length - 0) * Generator.GetNextNumber());
                 actualType = types[powerRandom];
+                
                 powerup = Instantiate(powerups[powerRandom], spawnPosition, Quaternion.identity);
                 posArrival++;
             }

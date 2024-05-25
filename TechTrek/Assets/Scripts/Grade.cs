@@ -53,7 +53,7 @@ public class Grade : MonoBehaviour
                 enemy.TakeDamage(damage);
             }
 
-        }else if(other.gameObject.CompareTag("boss")){
+        }else if(other.gameObject.CompareTag("boss") || other.gameObject.CompareTag("Malex")){
             Boss boss = other.gameObject.GetComponent<Boss>();
             if (boss != null)
             {

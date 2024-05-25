@@ -209,7 +209,7 @@ MonoBehaviour:
   velocityMovement: 2
   layerFront:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 8
   layerBottom:
     serializedVersion: 2
     m_Bits: 8
@@ -220,6 +220,11 @@ MonoBehaviour:
   bottomInfo: 0
   frontInfo: 0
   lookingForward: 1
+  layerPlayer:
+    serializedVersion: 2
+    m_Bits: 128
+  detectionRadius: 0.3
+  attackCooldown: 3
 --- !u!95 &4852962128240907890
 Animator:
   serializedVersion: 5

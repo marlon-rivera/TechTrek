@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
     private int damage = 5;
     public LayerMask layerPlayer;
     public float detectionRadius = 0.3f;
-    public float attackCooldown = 3f;
+    public float attackCooldown = 0.5f;
 
     private float lastAttackTime;
 
@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 
-    
+
     public void TakeDamage(int damage)
     {
         health -= damage;

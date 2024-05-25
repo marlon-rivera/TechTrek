@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 
 public class Player : MonoBehaviour
@@ -24,6 +26,9 @@ public class Player : MonoBehaviour
     [SerializeField] Slider sliderLife;
     private BoxCollider2D boxCollider;
     private bool unassailable = false;
+    private PanelController panelController;
+    private ManagerPopUps popUps;
+
 
 
 
@@ -41,6 +46,9 @@ public class Player : MonoBehaviour
         sliderLife.maxValue = health;
         sliderLife.value = sliderLife.maxValue;
         boxCollider = GetComponent<BoxCollider2D>();
+        panelController = FindObjectOfType<PanelController>();
+        popUps = FindObjectOfType<ManagerPopUps>();
+        StartPresentation();
     }
 
     void Update()
@@ -75,7 +83,7 @@ public class Player : MonoBehaviour
         {
             Jump();
         }
-        if (Input.GetKey(KeyCode.Space) && Time.time > LastShoot + 0.25f)
+        if (Input.GetKey(KeyCode.Space) && Time.time > LastShoot + 0.5f)
         {
             Shoot();
             LastShoot = Time.time;
@@ -186,6 +194,24 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "PowerUp")
         {
+            if (collision.gameObject.name == "Festivo(Clone)" && !popUps.festivo)
+            {
+                GameManager.StopGame();
+                panelController.ActiveFestivo();
+                popUps.festivo = true;
+            }
+            else if (collision.gameObject.name == "Paro(Clone)" && !popUps.paro)
+            {
+                GameManager.StopGame();
+                panelController.ActiveParo();
+                popUps.paro = true;
+            }
+            else if (collision.gameObject.name == "Tutoria(Clone)" && !popUps.tutoria)
+            {
+                GameManager.StopGame();
+                panelController.ActiveTutoria();
+                popUps.tutoria = true;
+            }
             SpawnPowerUps spawnScript = FindObjectOfType<SpawnPowerUps>();
             Debug.Log(spawnScript);
             if (spawnScript != null)
@@ -197,13 +223,17 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
 
         }
+        if (collision.gameObject.tag == "kill")
+        {
+            Destroy(gameObject);
+            SceneManager.LoadScene("Map");
+        }
     }
 
     public void TakeDamage(int damage)
     {
         if (!unassailable)
         {
-            Debug.Log("Dañooooooo");
             health -= damage;
             sliderLife.value = health;
             if (health <= 0)
@@ -259,6 +289,14 @@ public class Player : MonoBehaviour
         else if (type == "paro")
         {
             unassailable = false;
+        }
+    }
+
+    private void StartPresentation(){       
+        if(!popUps.presentacion){
+            GameManager.StopGame();
+            panelController.ActivePresentacion();
+            popUps.presentacion = true;
         }
     }
 

@@ -42,6 +42,8 @@ public class Bomb : MonoBehaviour
             }
 
         }
+        Rigidbody2D.velocity = Direction * 0;
+        
         Destroy(this.gameObject);
     }
 
