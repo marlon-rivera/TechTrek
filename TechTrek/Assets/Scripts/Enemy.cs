@@ -21,10 +21,8 @@ public class Enemy : MonoBehaviour
     public LayerMask layerPlayer;
     public float detectionRadius = 0.3f;
     public float attackCooldown = 0.5f;
-
     private float lastAttackTime;
-
-
+    
     private void Update()
     {
         rgb2D.velocity = new Vector2(velocityMovement, rgb2D.velocity.y);
@@ -75,6 +73,7 @@ public class Enemy : MonoBehaviour
         if (health <= 0)
         {
             Destroy(this.gameObject);
+           
         }
     }
 }

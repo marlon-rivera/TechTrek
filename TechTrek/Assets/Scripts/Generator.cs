@@ -2,35 +2,43 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
+using System.Collections;
 
 public class Generator : MonoBehaviour
 {
-    public static List<float> numbers = new List<float>();
-    private static int currentIndex = -1;
+    public Queue<float> numbers = new Queue<float>();
+    private string filePath = "Assets/data/numbers.csv";
 
     void Start()
     {
         LoadData();
     }
 
-    public static void LoadData()
+    public void LoadData()
     {
-        string filePath = "Assets/data/numbers.csv";
-        numbers = ReadCsvToFloatList(filePath);
-    }
-    public static float GetNextNumber()
-    {
-        if (numbers == null || numbers.Count == 0)
-        {
-            throw new InvalidOperationException("No data loaded. Call LoadData() first.");
-        }
-        currentIndex = (currentIndex + 1);
-        return numbers[currentIndex];
+        numbers = ReadCsvToFloatQueue();
     }
 
-    private static List<float> ReadCsvToFloatList(string filePath)
+    public float GetNextNumber()
     {
-        List<float> result = new List<float>();
+        if (numbers != null && numbers.Count == 50)
+        {
+            Debug.Log("Quedan 50 numeros, voy a cargar mas");
+            StartCoroutine(GetData());
+
+
+        }
+        if (numbers == null || numbers.Count == 0)
+        {
+            numbers = ReadCsvToFloatQueue();
+        }
+        return numbers.Dequeue();
+    }
+
+    private Queue<float> ReadCsvToFloatQueue()
+    {
+        Queue<float> result = new Queue<float>();
 
         try
         {
@@ -44,7 +52,7 @@ public class Generator : MonoBehaviour
                     string numberStr = value.Replace(".", ",");
                     if (float.TryParse(numberStr, out float number))
                     {
-                        result.Add(number);
+                        result.Enqueue(number);
                     }
                     else
                     {
@@ -58,5 +66,23 @@ public class Generator : MonoBehaviour
             Debug.LogError("Error loading data from CSV: " + e.Message);
         }
         return result;
+    }
+
+    IEnumerator GetData()
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get("http://localhost:5000/generate_numbers"))
+        {
+
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error al realizar la solicitud: " + request.error);
+            }
+            else
+            {
+                Debug.Log("Respuesta de la API: " + request.downloadHandler.text);
+            }
+        }
     }
 }

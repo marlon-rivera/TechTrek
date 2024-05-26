@@ -35,23 +35,7 @@ public class PowerUpMovement : MonoBehaviour
 
     void ChangeDirection()
     {
-        int direction = (int)(0 + (3 - 0) * Generator.GetNextNumber());
-        
-        switch (direction)
-        {
-            case 0:
-                moveDirection = Vector2.left;
-                break;
-            case 1:
-                moveDirection = Vector2.down;
-                break;
-            case 2:
-                moveDirection = Vector2.right;
-                break;
-            case 3:
-                moveDirection = Vector2.up;
-                break;
-        }
+        moveDirection = RandomWalk.GetMovement();
         timer = changeDirectionInterval;
     }
 

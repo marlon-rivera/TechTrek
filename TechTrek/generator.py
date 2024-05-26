@@ -6,6 +6,8 @@ import socket
 #Util
 
 
+app = Flask(__name__)
+
 
 def truncate(number):
   """
@@ -478,7 +480,21 @@ import csv
 seed = datetime.now().microsecond
 seed = list(str(seed))
 seed = list(map(int, seed))
-ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 200000, 10)
+ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 200, 10)
 with open("./Assets/data/numbers.csv", mode='w', newline='') as archivo:
   escritor_csv = csv.writer(archivo)
   escritor_csv.writerow(ri)
+
+@app.route("/generate_numbers", methods=['GET'])
+def generate_numbers():
+  seed = datetime.now().microsecond
+  seed = list(str(seed))
+  seed = list(map(int, seed))
+  ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 200, 10)
+  with open("./Assets/data/numbers.csv", mode='w', newline='') as archivo:
+    escritor_csv = csv.writer(archivo)
+    escritor_csv.writerow(ri)
+  return jsonify("OKI")
+
+if __name__ == "__main__":
+   app.run(debug=True)

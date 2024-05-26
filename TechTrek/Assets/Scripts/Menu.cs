@@ -16,11 +16,6 @@ public class Menu : MonoBehaviour
         Application.Quit();
     }
 
-    public void GoKnowHow()
-    {
-        
-    }
-
     public void GoToLevel1()
     {
         SceneManager.LoadScene("Level1");

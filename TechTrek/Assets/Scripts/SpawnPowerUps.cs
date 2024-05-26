@@ -19,73 +19,21 @@ public class SpawnPowerUps : MonoBehaviour
     private GameObject powerup = null;
     private int posArrival = 0;
     private int posService = 0;
-
     public Camera mainCamera;
     private string[] types = new string[] { "festivo", "paro", "tutoria" };
     private string actualType;
     public GameObject[] typesAssigned;
-
     private int powerRandom;
 
     void Start()
     {
-        Generator.LoadData();
+        FindObjectOfType<Generator>().LoadData();
         mainCamera = Camera.main;
-
-        for (int i = 0; i < 4; i++)
-        {
-            int number = (int)(0 + (99 - 0) * Generator.GetNextNumber());
-
-            if (number <= arrivalTimeProb[1])
-            {
-                arrivalTime[i] = 16;
-            }
-            else if (number <= arrivalTimeProb[2])
-            {
-                arrivalTime[i] = 17;
-
-            }
-            else if (number <= arrivalTimeProb[3])
-            {
-                arrivalTime[i] = 18;
-            }
-            else
-            {
-                arrivalTime[i] = 19;
-            }
-            if (i == 0)
-            {
-                arrivalTimeSum[i] = arrivalTime[i];
-            }
-            else
-            {
-                arrivalTimeSum[i] = arrivalTimeSum[i - 1] + arrivalTime[i];
-            }
-
-        }
-
-        for (int i = 0; i < 4; i++)
-        {
-            int number = (int)(0 + (99 - 0) * Generator.GetNextNumber());
-
-            if (number <= serviceTimeProb[1])
-            {
-                serviceTime[i] = 4;
-            }
-            else if (number <= serviceTimeProb[2])
-            {
-                serviceTime[i] = 5;
-            }
-            else if (number <= serviceTimeProb[3])
-            {
-                serviceTime[i] = 6;
-            }
-            else
-            {
-                serviceTime[i] = 7;
-            }
-            serviceTimeSum[i] = arrivalTimeSum[i] + serviceTime[i];
-        }
+ 
+        arrivalTime = WaitingLine.CalculateArrivalTimes();
+        serviceTime = WaitingLine.CalculateServicesTime();
+        arrivalTimeSum = WaitingLine.arrivalTimeSum;
+        serviceTimeSum = WaitingLine.serviceTimeSum;        
 
         typesAssigned[0].SetActive(false);
         typesAssigned[1].SetActive(false);
@@ -106,8 +54,9 @@ public class SpawnPowerUps : MonoBehaviour
         {
             if (time == arrivalTimeSum[posArrival])
             {
-                Vector2 spawnPosition = new Vector2((int)(minX + (maxX - minX) * Generator.GetNextNumber() + 100), (int)(minY + (maxY - minY) * Generator.GetNextNumber()));
-                powerRandom = (int)(0 + (powerups.Length - 0) * Generator.GetNextNumber());
+                Vector2 spawnPosition = new Vector2((int)(minX + (maxX - minX) * FindObjectOfType<Generator>().GetNextNumber() + 100), (int)(minY + (maxY - minY) * FindObjectOfType<Generator>().GetNextNumber()));
+                powerRandom = (int)(0 + (powerups.Length - 0) * FindObjectOfType<Generator>().GetNextNumber());
+                Debug.Log("PowerRandom: " + powerRandom);
                 actualType = types[powerRandom];
                 
                 powerup = Instantiate(powerups[powerRandom], spawnPosition, Quaternion.identity);

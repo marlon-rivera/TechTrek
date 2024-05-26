@@ -15,11 +15,7 @@ public class Player : MonoBehaviour
     private bool Grounded;
     private Animator Animator;
     public float leftBound = -5.0f;
-    private GameObject GradePrefab;
     private float LastShoot = 0.0f;
-    private float[] luckOne;
-    private float[] luckTwo;
-    private float[] luckThree;
     private int lucky;
     private int previousLucky;
     public int health = 150;
@@ -27,8 +23,12 @@ public class Player : MonoBehaviour
     private BoxCollider2D boxCollider;
     private bool unassailable = false;
     private PanelController panelController;
-    private ManagerPopUps popUps;
-
+    public AudioManager audioManager;
+    public AudioClip jumpSound;
+    public AudioClip attackSound;
+    public AudioClip successSound;
+    public AudioClip failSound;
+    public AudioClip damageSound;
 
 
 
@@ -38,16 +38,12 @@ public class Player : MonoBehaviour
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
-        luckOne = new float[] { 0.26f, 0.526f, 0.8f, 0.9f, 1.0f };
-        luckTwo = new float[] { 0.1f, 0.37f, 0.64f, 0.91f, 1.0f };
-        luckThree = new float[] { 0.1f, 0.2f, 0.47f, 0.74f, 1.0f };
-        Generator.LoadData();
-        lucky = (int)(1 + (3 - 1) * Generator.GetNextNumber());
+        FindObjectOfType<Generator>().LoadData();
+        lucky = (int)(1 + (3 - 1) * FindObjectOfType<Generator>().GetNextNumber());
         sliderLife.maxValue = health;
         sliderLife.value = sliderLife.maxValue;
         boxCollider = GetComponent<BoxCollider2D>();
         panelController = FindObjectOfType<PanelController>();
-        popUps = FindObjectOfType<ManagerPopUps>();
         StartPresentation();
     }
 
@@ -56,6 +52,7 @@ public class Player : MonoBehaviour
         Horizontal = Input.GetAxisRaw("Horizontal");
         if (Horizontal < 0.0f)
         {
+
             transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
             if (transform.position.x > leftBound)
             {
@@ -66,9 +63,9 @@ public class Player : MonoBehaviour
                 Rigidbody2D.velocity = new Vector2(0, Rigidbody2D.velocity.y);
             }
         }
-
         else if (Horizontal > 0.0f)
         {
+
             transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
 
@@ -83,7 +80,7 @@ public class Player : MonoBehaviour
         {
             Jump();
         }
-        if (Input.GetKey(KeyCode.Space) && Time.time > LastShoot + 0.5f)
+        if (Input.GetKey(KeyCode.Space) && Time.time > LastShoot + 0.25f)
         {
             Shoot();
             LastShoot = Time.time;
@@ -92,22 +89,23 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        if (Generator.numbers.Count == 0)
+        if (FindObjectOfType<Generator>().numbers.Count == 0)
         {
-            Generator.LoadData();
+            FindObjectOfType<Generator>().LoadData();
         }
 
-        float randomNumber = Generator.GetNextNumber();
-        getPrefab(randomNumber);
+        float randomNumber = FindObjectOfType<Generator>().GetNextNumber();
         Vector3 Direction;
         if (transform.localScale.x == 1.0f) Direction = Vector2.right;
         else Direction = Vector2.left;
-        GameObject grade = Instantiate(GradePrefab, transform.position + Direction * 0.9f, Quaternion.identity);
+        GameObject grade = Instantiate(MonteCarlo.getPrefab(lucky), transform.position + Direction * 0.9f, Quaternion.identity);
         grade.GetComponent<Grade>().SetDirection(Direction);
+        audioManager.PlaySound(attackSound);
     }
 
     private void Jump()
     {
+        audioManager.PlaySound(jumpSound);
         Rigidbody2D.AddForce(Vector2.up * JumpForce);
     }
 
@@ -117,100 +115,27 @@ public class Player : MonoBehaviour
 
     }
 
-    void getPrefab(float randomNumber)
-    {
-        if (lucky == 1)
-        {
-            if (randomNumber <= luckOne[0])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota1");
-            }
-            else if (randomNumber <= luckOne[1])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota2");
-            }
-            else if (randomNumber <= luckOne[2])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota3");
-            }
-            else if (randomNumber <= luckOne[3])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota4");
-            }
-            else if (randomNumber <= luckOne[4])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota5");
-            }
-        }
-        else if (lucky == 2)
-        {
-            if (randomNumber <= luckTwo[0])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota1");
-            }
-            else if (randomNumber <= luckTwo[1])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota2");
-            }
-            else if (randomNumber <= luckTwo[2])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota3");
-            }
-            else if (randomNumber <= luckTwo[3])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota4");
-            }
-            else if (randomNumber <= luckTwo[4])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota5");
-            }
-        }
-        else if (lucky == 3)
-        {
-            if (randomNumber <= luckThree[0])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota1");
-            }
-            else if (randomNumber <= luckThree[1])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota2");
-            }
-            else if (randomNumber <= luckThree[2])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota3");
-            }
-            else if (randomNumber <= luckThree[3])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota4");
-            }
-            else if (randomNumber <= luckThree[4])
-            {
-                GradePrefab = Resources.Load<GameObject>("prefabs/notas/Nota5");
-            }
-        }
-    }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "PowerUp")
         {
-            if (collision.gameObject.name == "Festivo(Clone)" && !popUps.festivo)
+            if (collision.gameObject.name == "Festivo(Clone)" && !ManagerPopUps.festivo)
             {
                 GameManager.StopGame();
                 panelController.ActiveFestivo();
-                popUps.festivo = true;
+                ManagerPopUps.festivo = true;
             }
-            else if (collision.gameObject.name == "Paro(Clone)" && !popUps.paro)
+            else if (collision.gameObject.name == "Paro(Clone)" && !ManagerPopUps.paro)
             {
                 GameManager.StopGame();
                 panelController.ActiveParo();
-                popUps.paro = true;
+                ManagerPopUps.paro = true;
             }
-            else if (collision.gameObject.name == "Tutoria(Clone)" && !popUps.tutoria)
+            else if (collision.gameObject.name == "Tutoria(Clone)" && !ManagerPopUps.tutoria)
             {
                 GameManager.StopGame();
                 panelController.ActiveTutoria();
-                popUps.tutoria = true;
+                ManagerPopUps.tutoria = true;
             }
             SpawnPowerUps spawnScript = FindObjectOfType<SpawnPowerUps>();
             Debug.Log(spawnScript);
@@ -220,13 +145,16 @@ public class Player : MonoBehaviour
                 string powerupType = spawnScript.GetPowerUpType();
                 ApplyPowerUp(powerupType);
             }
+            ManagerPopUps.SaveData();
             Destroy(collision.gameObject);
 
         }
         if (collision.gameObject.tag == "kill")
         {
             Destroy(gameObject);
-            SceneManager.LoadScene("Map");
+            audioManager.PlaySound(failSound);
+            GameManager.StopGame();
+            panelController.ActiveFail();
         }
     }
 
@@ -234,11 +162,15 @@ public class Player : MonoBehaviour
     {
         if (!unassailable)
         {
+            audioManager.PlaySound(damageSound);
             health -= damage;
             sliderLife.value = health;
             if (health <= 0)
             {
                 Destroy(this.gameObject);
+                audioManager.PlaySound(failSound);
+                GameManager.StopGame();
+                panelController.ActiveFail();
             }
         }
     }
@@ -292,11 +224,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void StartPresentation(){       
-        if(!popUps.presentacion){
+    private void StartPresentation()
+    {
+        Debug.Log("Presentacion: " + ManagerPopUps.presentacion);
+        if (!ManagerPopUps.presentacion)
+        {
             GameManager.StopGame();
             panelController.ActivePresentacion();
-            popUps.presentacion = true;
+            ManagerPopUps.presentacion = true;
+            ManagerPopUps.SaveData();
+        }
+        else
+        {
+            GameManager.ResumeGame();
         }
     }
 

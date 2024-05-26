@@ -4,53 +4,27 @@ using UnityEngine;
 
 public class Environment : MonoBehaviour
 {
-    public GameObject player;
+    public Transform playerPosition;
     public Boss boss;
 
     public float attackDistance = 5f;
     public float timeBetweenAttacks = 1f;
     private float timeNextAttack;
     private PanelController panelController;
-    private ManagerPopUps popUps;
 
     void Start()
     {
         panelController = FindObjectOfType<PanelController>();
-        popUps = FindObjectOfType<ManagerPopUps>();
     }
 
     void Update()
     {
-        if (player != null && boss != null)
+        if (playerPosition != null && boss != null)
         {
-            float distanceToPlayer = Vector2.Distance(boss.transform.position, player.transform.position);
-            if (distanceToPlayer <= attackDistance)
+            float distanceToplayerPosition = Vector2.Distance(boss.transform.position, playerPosition.transform.position);
+            if (distanceToplayerPosition <= attackDistance)
             {
-                if (!popUps.errorus)
-                {
-                    panelController.ActiveErrorus();
-                    popUps.errorus = true;
-                    GameManager.StopGame();
-
-                }
-                else if (!popUps.datus)
-                {
-                    panelController.ActiveDatus();
-                    popUps.datus = true;
-                    GameManager.StopGame();
-                }
-                else if (!popUps.cyber)
-                {
-                    panelController.ActiveCyber();
-                    popUps.cyber = true;
-                    GameManager.StopGame();
-                }
-                else if (!popUps.malex)
-                {
-                    panelController.ActiveMalex();
-                    popUps.malex = true;
-                    GameManager.StopGame();
-                }
+                VerifyBoss();
                 if (!boss.GetAnimator().GetBool("attacking"))
                 {
                     if (boss.CompareTag("Malex"))
@@ -64,8 +38,8 @@ public class Environment : MonoBehaviour
 
                 if (Time.time >= timeNextAttack)
                 {
-                    boss.Follow(player.transform.position);
-                    boss.Shoot(player.transform.position);
+                    boss.Follow(playerPosition.transform.position);
+                    boss.Shoot(playerPosition.transform.position);
                     timeNextAttack = Time.time + timeBetweenAttacks;
                 }
             }
@@ -85,5 +59,48 @@ public class Environment : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void VerifyBoss()
+    {
+        if (panelController.panelErrorus != null)
+        {
+            if (!ManagerPopUps.errorus)
+            {
+                panelController.ActiveErrorus();
+                ManagerPopUps.errorus = true;
+                GameManager.StopGame();
+            }
+        }
+        else if (panelController.panelDatus != null)
+        {
+            if (!ManagerPopUps.datus)
+            {
+                panelController.ActiveDatus();
+                ManagerPopUps.datus = true;
+                GameManager.StopGame();
+            }
+        }
+        else if (panelController.panelCyber != null)
+        {
+            if (!ManagerPopUps.cyber)
+            {
+                panelController.ActiveCyber();
+                ManagerPopUps.cyber = true;
+                GameManager.StopGame();
+            }
+        }
+        else if (panelController.panelMalex != null)
+        {
+            if (!ManagerPopUps.malex)
+            {
+                panelController.ActiveMalex();
+                ManagerPopUps.malex = true;
+                GameManager.StopGame();
+            }
+        }
+        ManagerPopUps.SaveData();
+
+
     }
 }
