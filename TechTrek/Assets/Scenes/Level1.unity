@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 62575691}
   - component: {fileID: 62575690}
   m_Layer: 5
-  m_Name: Start1
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2313,7 +2313,7 @@ Transform:
   m_GameObject: {fileID: 205854361}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 93.77, y: 0.08, z: -10}
+  m_LocalPosition: {x: -0.2699852, y: 0.08, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3109,11 +3109,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: f3e231443c970a049bd3934e76c705ea, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3555,6 +3555,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1424641975}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
         m_MethodName: GoMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1424641975}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4101,9 +4113,9 @@ MonoBehaviour:
   audioManager: {fileID: 293069282}
   jumpSound: {fileID: 8300000, guid: 34186dc3f15448543ab8565e916b66f7, type: 3}
   attackSound: {fileID: 8300000, guid: bd41e168913f13f49ab8e7e132b3446e, type: 3}
-  successSound: {fileID: 0}
   failSound: {fileID: 8300000, guid: bf6cd1beba2ac95428e3dd9a72e6a670, type: 3}
   damageSound: {fileID: 8300000, guid: d71c98b841c839b4ead33e96c4edc023, type: 3}
+  powerUpTakenSound: {fileID: 8300000, guid: ccbfa7583082bb74f80615f4d3869980, type: 3}
 --- !u!114 &420506776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4225,7 +4237,7 @@ Transform:
   m_GameObject: {fileID: 420506773}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 87.44999, y: -3.9, z: 0}
+  m_LocalPosition: {x: -7.05, y: -3.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7708,6 +7720,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1424641975}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &836163833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9618,6 +9642,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1424641975}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1009490509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10497,7 +10533,7 @@ GameObject:
   - component: {fileID: 1102676615}
   - component: {fileID: 1102676614}
   m_Layer: 5
-  m_Name: Start2
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10657,6 +10693,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1953877559}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1424641975}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11015,6 +11063,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1953877559}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1424641975}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12283,6 +12343,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1424641975}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1242763016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13508,7 +13580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 221, y: 3}
+  m_AnchoredPosition: {x: 219.5, y: 6}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1380926186
@@ -14117,6 +14189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1a15a14c335e140815642f36abfa05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 699a5429076709e46a29bf165831ebf7, type: 3}
+  audioManager: {fileID: 293069282}
+  exitSound: {fileID: 8300000, guid: b17e308ba794bc24a99e3fa8ef2b77d8, type: 3}
 --- !u!1 &1426554593
 GameObject:
   m_ObjectHideFlags: 0
@@ -15188,6 +15263,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1424641975}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1582940590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15297,6 +15384,12 @@ MonoBehaviour:
   - {fileID: 6488369048979955167, guid: dc8872c937bf5504f8f74b5e5b2529c9, type: 3}
   slider: {fileID: 537137801}
   animator: {fileID: 1622531840}
+  attackSound: {fileID: 8300000, guid: 69abc83f897d49146939193f9bab5f0d, type: 3}
+  audioManager: {fileID: 293069282}
+  successSound: {fileID: 8300000, guid: 84164336473d38149890a3cca7612b14, type: 3}
+  damageSound: {fileID: 8300000, guid: e35ae366e44b8974abc19f91375df852, type: 3}
+  attackDistance: 5
+  timeBetweenAttacks: 1
 --- !u!61 &1622531842
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16471,7 +16564,7 @@ GameObject:
   - component: {fileID: 1766446410}
   - component: {fileID: 1766446409}
   m_Layer: 5
-  m_Name: Start3
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17053,8 +17146,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPosition: {fileID: 420506780}
   boss: {fileID: 1622531841}
-  attackDistance: 5
-  timeBetweenAttacks: 1
 --- !u!4 &1803635729
 Transform:
   m_ObjectHideFlags: 0

@@ -107,22 +107,24 @@ public class PanelController : MonoBehaviour
     public void ActiveSuccess()
     {
         Player player = FindObjectOfType<Player>();
-        int enemiesKilled = EnemyCounter.CountEnemies();
+        int enemiesKilled = totalEnemies - EnemyCounter.CountEnemies();
         int starts = CalculateStarRating(player.health, enemiesKilled);
-        //Debug.Log("Estrellas: " + starts + ", enemiesKilled: " + enemiesKilled + ", enemigos totales: " + totalEnemies+ ", health: " + player.health);
-        panelSuccess.SetActive(true);
+        Debug.Log("Stars: " + starts);
         Image[] images = panelSuccess.GetComponentsInChildren<Image>();
-
+        int count = 1;
+        string nameImg = "Empty" + count;
         foreach (Image img in images)
         {
-
-                Debug.Log("Imagen encontrada: " + img.name);
-            
+            if (img.name == nameImg && starts > 0)
+            {
+                img.gameObject.SetActive(false);
+                starts--;
+                count++;
+                nameImg = "Empty" + count;
+                
+            }
         }
-        for (int i = 0; i < starts; i++)
-        {
-
-        }
+        panelSuccess.SetActive(true);
     }
 
     public void InactiveSuccess()
@@ -146,7 +148,12 @@ public class PanelController : MonoBehaviour
         float lifePercentage = (float)currentLife / 150;
         float enemiesKilledPercentage = (float)enemiesKilled / totalEnemies;
         float overallScore = (lifePercentage + enemiesKilledPercentage) / 2;
-
+        Debug.Log("Current Life: " + currentLife);
+        Debug.Log("Enemies Killed: " + enemiesKilled);
+        Debug.Log("Total Enemies: " + totalEnemies);
+        Debug.Log("Life Percentage: " + lifePercentage);
+        Debug.Log("Enemies Killed Percentage: " + enemiesKilledPercentage);
+        Debug.Log("Overall Score: " + overallScore);
         if (overallScore >= 0.8f)
         {
             return 3;

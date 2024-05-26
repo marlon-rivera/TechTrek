@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
 
+    public AudioClip clickSound;
+    public AudioManager audioManager;
+    public AudioClip exitSound;
+
     public void GoMap()
     {
         SceneManager.LoadScene(1);
@@ -34,5 +38,13 @@ public class Menu : MonoBehaviour
     public void GoToLevel4()
     {
         SceneManager.LoadScene("Level4");
+    }
+
+    public void PlayClick(){
+        audioManager.PlaySound(clickSound);
+    }
+
+    public void PlayExit(){
+        audioManager.PlaySound(exitSound);
     }
 }

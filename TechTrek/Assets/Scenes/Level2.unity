@@ -303,6 +303,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &14818924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,6 +469,18 @@ MonoBehaviour:
       - m_Target: {fileID: 214684183}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
         m_MethodName: GoMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2285,6 +2309,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1a15a14c335e140815642f36abfa05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clickSound: {fileID: 8300000, guid: 699a5429076709e46a29bf165831ebf7, type: 3}
+  audioManager: {fileID: 603783197}
+  exitSound: {fileID: 8300000, guid: b17e308ba794bc24a99e3fa8ef2b77d8, type: 3}
 --- !u!1 &218123786
 GameObject:
   m_ObjectHideFlags: 0
@@ -3264,6 +3291,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &439985036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3718,11 +3757,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: f3e231443c970a049bd3934e76c705ea, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4068,6 +4107,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1182548368}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4874,6 +4925,10 @@ MonoBehaviour:
   - {fileID: 6488369048979955167, guid: dc8872c937bf5504f8f74b5e5b2529c9, type: 3}
   slider: {fileID: 976706926}
   animator: {fileID: 830916931}
+  attackSound: {fileID: 8300000, guid: 69abc83f897d49146939193f9bab5f0d, type: 3}
+  audioManager: {fileID: 603783197}
+  successSound: {fileID: 8300000, guid: 84164336473d38149890a3cca7612b14, type: 3}
+  damageSound: {fileID: 8300000, guid: e35ae366e44b8974abc19f91375df852, type: 3}
 --- !u!95 &830916931
 Animator:
   serializedVersion: 5
@@ -7377,6 +7432,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1203632233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7577,9 +7644,9 @@ MonoBehaviour:
   audioManager: {fileID: 603783197}
   jumpSound: {fileID: 8300000, guid: 34186dc3f15448543ab8565e916b66f7, type: 3}
   attackSound: {fileID: 8300000, guid: bd41e168913f13f49ab8e7e132b3446e, type: 3}
-  successSound: {fileID: 0}
   failSound: {fileID: 8300000, guid: bf6cd1beba2ac95428e3dd9a72e6a670, type: 3}
   damageSound: {fileID: 8300000, guid: d71c98b841c839b4ead33e96c4edc023, type: 3}
+  powerUpTakenSound: {fileID: 8300000, guid: ccbfa7583082bb74f80615f4d3869980, type: 3}
 --- !u!114 &1232036793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7878,6 +7945,18 @@ MonoBehaviour:
       - m_Target: {fileID: 214684183}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
         m_MethodName: GoToLevel2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8791,6 +8870,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1182548368}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11887,6 +11978,18 @@ MonoBehaviour:
       - m_Target: {fileID: 214684183}
         m_TargetAssemblyTypeName: Menu, Assembly-CSharp
         m_MethodName: GoMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 214684183}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

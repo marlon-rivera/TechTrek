@@ -164,6 +164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 5
   damage: 2
+  gradeSound: {fileID: 8300000, guid: e6bdfcd61be2cfb4181d86e37fe83ba3, type: 3}
+  audioManager: {fileID: 0}
 --- !u!95 &1121504474117614092
 Animator:
   serializedVersion: 5

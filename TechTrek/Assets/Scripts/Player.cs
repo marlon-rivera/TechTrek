@@ -26,9 +26,9 @@ public class Player : MonoBehaviour
     public AudioManager audioManager;
     public AudioClip jumpSound;
     public AudioClip attackSound;
-    public AudioClip successSound;
     public AudioClip failSound;
     public AudioClip damageSound;
+    public AudioClip powerUpTakenSound;
 
 
 
@@ -146,6 +146,7 @@ public class Player : MonoBehaviour
                 ApplyPowerUp(powerupType);
             }
             ManagerPopUps.SaveData();
+            audioManager.PlaySound(powerUpTakenSound);
             Destroy(collision.gameObject);
 
         }

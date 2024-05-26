@@ -8,16 +8,20 @@ public class Grade : MonoBehaviour
     public float Speed;
     private Vector2 Direction;
     public int damage;
-    
+    public AudioClip gradeSound;
+    public AudioManager audioManager;
+
+
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();
+        audioManager = FindObjectOfType<AudioManager>();
         if (damage == 1)
         {
 
             Animator animator = this.gameObject.GetComponent<Animator>();
             animator.SetBool("destroy", true);
-            
+
         }
 
     }
@@ -53,13 +57,16 @@ public class Grade : MonoBehaviour
                 enemy.TakeDamage(damage);
             }
 
-        }else if(other.gameObject.CompareTag("boss") || other.gameObject.CompareTag("Malex")){
+        }
+        else if (other.gameObject.CompareTag("boss") || other.gameObject.CompareTag("Malex"))
+        {
             Boss boss = other.gameObject.GetComponent<Boss>();
             if (boss != null)
             {
                 boss.TakeDamage(damage);
             }
         }
+        audioManager.PlaySound(gradeSound);
         Destroy(this.gameObject);
     }
 }

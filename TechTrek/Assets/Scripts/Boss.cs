@@ -14,6 +14,10 @@ public class Boss : MonoBehaviour
     [SerializeField] Slider slider;
     public Animator animator;
     private PanelController panelController;
+    public AudioClip attackSound;
+    public AudioManager audioManager;
+    public AudioClip successSound;
+    public AudioClip damageSound;
 
     void Start()
     {
@@ -41,6 +45,7 @@ public class Boss : MonoBehaviour
         GameObject bomb = Instantiate(bombPrefab, transform.position + direction * 0.9f, Quaternion.identity);
         bomb.GetComponent<Bomb>().SetDirection(direction);
         currentState = MarkovChain.GetNextState(currentState);
+        audioManager.PlaySound(attackSound);
 
     }
 
@@ -62,9 +67,11 @@ public class Boss : MonoBehaviour
     {
         health -= damage;
         slider.value = health;
+        audioManager.PlaySound(damageSound);
         Debug.Log(health);
         if (health <= 0)
         {
+            audioManager.PlaySound(successSound);
             Destroy(this.gameObject);
             GameManager.StopGame();
             panelController.ActiveSuccess();
@@ -95,6 +102,92 @@ public class Boss : MonoBehaviour
     {
         return animator;
     }
+    public float attackDistance = 5f;
+    public float timeBetweenAttacks = 1f;
+    private float timeNextAttack;
 
 
+    public void UpdateAction(Transform playerPosition)
+    {
+        float distanceToplayerPosition = Vector2.Distance(this.transform.position, playerPosition.transform.position);
+        if (distanceToplayerPosition <= attackDistance)
+        {
+            VerifyBoss();
+            if (!GetAnimator().GetBool("attacking"))
+            {
+                if (CompareTag("Malex"))
+                {
+                   GetAnimator().SetBool("transform", true);
+                }
+                GetAnimator().SetBool("attacking", true);
+                Debug.Log("Iniciando ataque: " + GetAnimator().GetBool("attacking"));
+            }
+
+
+            if (Time.time >= timeNextAttack)
+            {
+               Follow(playerPosition.transform.position);
+                Shoot(playerPosition.transform.position);
+                timeNextAttack = Time.time + timeBetweenAttacks;
+            }
+        }
+
+        else
+        {
+
+            if (GetAnimator().GetBool("attacking"))
+            {
+                if (CompareTag("Malex"))
+                {
+                    GetAnimator().SetBool("transform", false);
+
+                }
+                GetAnimator().SetBool("attacking", false);
+                Debug.Log("Terminando ataque: " + GetAnimator().GetBool("attacking"));
+            }
+        }
+    }
+
+    private void VerifyBoss()
+    {
+        if (panelController.panelErrorus != null)
+        {
+            if (!ManagerPopUps.errorus)
+            {
+                panelController.ActiveErrorus();
+                ManagerPopUps.errorus = true;
+                GameManager.StopGame();
+            }
+        }
+        else if (panelController.panelDatus != null)
+        {
+            if (!ManagerPopUps.datus)
+            {
+                panelController.ActiveDatus();
+                ManagerPopUps.datus = true;
+                GameManager.StopGame();
+            }
+        }
+        else if (panelController.panelCyber != null)
+        {
+            if (!ManagerPopUps.cyber)
+            {
+                panelController.ActiveCyber();
+                ManagerPopUps.cyber = true;
+                GameManager.StopGame();
+            }
+        }
+        else if (panelController.panelMalex != null)
+        {
+            if (!ManagerPopUps.malex)
+            {
+                panelController.ActiveMalex();
+                ManagerPopUps.malex = true;
+                GameManager.StopGame();
+            }
+        }
+        ManagerPopUps.SaveData();
+
+
+    }
 }

@@ -31,7 +31,7 @@ public class Generator : MonoBehaviour
         }
         if (numbers == null || numbers.Count == 0)
         {
-            numbers = ReadCsvToFloatQueue();
+            throw new InvalidOperationException("Cargar datos");
         }
         return numbers.Dequeue();
     }
@@ -82,6 +82,7 @@ public class Generator : MonoBehaviour
             else
             {
                 Debug.Log("Respuesta de la API: " + request.downloadHandler.text);
+                LoadData();
             }
         }
     }
