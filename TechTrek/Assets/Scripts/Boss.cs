@@ -18,6 +18,10 @@ public class Boss : MonoBehaviour
     public AudioManager audioManager;
     public AudioClip successSound;
     public AudioClip damageSound;
+    public AudioClip attentionSound;
+    public AudioClip laughSound;
+
+    private Coroutine audioCoroutine;
 
     void Start()
     {
@@ -30,7 +34,6 @@ public class Boss : MonoBehaviour
         health = 150;
         slider.maxValue = health;
         panelController = FindObjectOfType<PanelController>();
-
     }
 
     public void Shoot(Vector3 target)
@@ -46,7 +49,6 @@ public class Boss : MonoBehaviour
         bomb.GetComponent<Bomb>().SetDirection(direction);
         currentState = MarkovChain.GetNextState(currentState);
         audioManager.PlaySound(attackSound);
-
     }
 
     public void Follow(Vector3 target)
@@ -102,49 +104,65 @@ public class Boss : MonoBehaviour
     {
         return animator;
     }
+
     public float attackDistance = 5f;
     public float timeBetweenAttacks = 1f;
     private float timeNextAttack;
 
-
     public void UpdateAction(Transform playerPosition)
     {
-        float distanceToplayerPosition = Vector2.Distance(this.transform.position, playerPosition.transform.position);
-        if (distanceToplayerPosition <= attackDistance)
+        float distanceToPlayerPosition = Vector2.Distance(this.transform.position, playerPosition.transform.position);
+        if (distanceToPlayerPosition <= attackDistance)
         {
             VerifyBoss();
             if (!GetAnimator().GetBool("attacking"))
             {
                 if (CompareTag("Malex"))
                 {
-                   GetAnimator().SetBool("transform", true);
+                    GetAnimator().SetBool("transform", true);
                 }
                 GetAnimator().SetBool("attacking", true);
                 Debug.Log("Iniciando ataque: " + GetAnimator().GetBool("attacking"));
+                if (audioCoroutine == null)
+                {
+                    audioCoroutine = StartCoroutine(PlayAttentionAndLaugh());
+                }
             }
-
 
             if (Time.time >= timeNextAttack)
             {
-               Follow(playerPosition.transform.position);
+                Follow(playerPosition.transform.position);
                 Shoot(playerPosition.transform.position);
                 timeNextAttack = Time.time + timeBetweenAttacks;
             }
         }
-
         else
         {
-
             if (GetAnimator().GetBool("attacking"))
             {
                 if (CompareTag("Malex"))
                 {
                     GetAnimator().SetBool("transform", false);
-
+                    if (audioCoroutine != null)
+                    {
+                        StopCoroutine(audioCoroutine);
+                        audioCoroutine = null;
+                    }
                 }
                 GetAnimator().SetBool("attacking", false);
                 Debug.Log("Terminando ataque: " + GetAnimator().GetBool("attacking"));
             }
+        }
+    }
+
+    private IEnumerator PlayAttentionAndLaugh()
+    {
+        while (true)
+        {
+            audioManager.PlaySound(attentionSound);
+            yield return new WaitForSeconds(2f);
+            audioManager.PlaySound(laughSound);
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -187,7 +205,5 @@ public class Boss : MonoBehaviour
             }
         }
         ManagerPopUps.SaveData();
-
-
     }
 }
