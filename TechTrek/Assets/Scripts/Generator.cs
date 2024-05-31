@@ -22,17 +22,12 @@ public class Generator : MonoBehaviour
 
     public float GetNextNumber()
     {
-        if (numbers != null && numbers.Count == 50)
+        if (numbers != null && numbers.Count == 200)
         {
             Debug.Log("Quedan 50 numeros, voy a cargar mas");
             StartCoroutine(GetData());
-
-
         }
-        if (numbers == null || numbers.Count == 0)
-        {
-            throw new InvalidOperationException("Cargar datos");
-        }
+        Debug.Log("Restantes: " + numbers.Count);
         return numbers.Dequeue();
     }
 

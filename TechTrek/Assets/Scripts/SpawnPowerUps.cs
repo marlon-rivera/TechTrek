@@ -6,8 +6,7 @@ using System.Linq;
 
 public class SpawnPowerUps : MonoBehaviour
 {
-    private int[] arrivalTimeProb = new int[] { 0, 25, 50, 75 };
-    private int[] serviceTimeProb = new int[] { 0, 20, 60, 85 };
+
     private int[] arrivalTime = new int[4];
     private int[] serviceTime = new int[4];
     private float minX, maxX, minY, maxY;
@@ -52,11 +51,10 @@ public class SpawnPowerUps : MonoBehaviour
 
         if (posArrival < 4)
         {
-            if (time == arrivalTimeSum[posArrival])
+            if (time == arrivalTimeSum[posArrival]) 
             {
                 Vector2 spawnPosition = new Vector2((int)(minX + (maxX - minX) * FindObjectOfType<Generator>().GetNextNumber() + 100), (int)(minY + (maxY - minY) * FindObjectOfType<Generator>().GetNextNumber()));
                 powerRandom = (int)(0 + (powerups.Length - 0) * FindObjectOfType<Generator>().GetNextNumber());
-                Debug.Log("PowerRandom: " + powerRandom);
                 actualType = types[powerRandom];
                 
                 powerup = Instantiate(powerups[powerRandom], spawnPosition, Quaternion.identity);

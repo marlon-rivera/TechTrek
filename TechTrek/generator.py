@@ -480,7 +480,7 @@ import csv
 seed = datetime.now().microsecond
 seed = list(str(seed))
 seed = list(map(int, seed))
-ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 200, 10)
+ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 2000, 10)
 with open("./Assets/data/numbers.csv", mode='w', newline='') as archivo:
   escritor_csv = csv.writer(archivo)
   escritor_csv.writerow(ri)
@@ -490,7 +490,7 @@ def generate_numbers():
   seed = datetime.now().microsecond
   seed = list(str(seed))
   seed = list(map(int, seed))
-  ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 200, 10)
+  ri, xi, ni = generateNumbersTested(int(sum(seed)/2), 3, 5, 7, 1, 9, 2000, 10)
   with open("./Assets/data/numbers.csv", mode='w', newline='') as archivo:
     escritor_csv = csv.writer(archivo)
     escritor_csv.writerow(ri)

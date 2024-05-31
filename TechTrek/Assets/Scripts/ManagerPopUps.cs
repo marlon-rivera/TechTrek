@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ManagerPopUps : MonoBehaviour
 {
-    // Definir las claves de PlayerPrefs como constantes
     private const string FestivoKey = "festivo";
     private const string ParoKey = "paro";
     private const string TutoriaKey = "tutoria";

@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-
 public class Player : MonoBehaviour
 {
     private Rigidbody2D Rigidbody2D;
@@ -98,6 +96,10 @@ public class Player : MonoBehaviour
         Vector3 Direction;
         if (transform.localScale.x == 1.0f) Direction = Vector2.right;
         else Direction = Vector2.left;
+        if (lucky == 0)
+        {
+            lucky = (int)(1 + (3 - 1) * FindObjectOfType<Generator>().GetNextNumber());
+        }
         GameObject grade = Instantiate(MonteCarlo.getPrefab(lucky), transform.position + Direction * 0.9f, Quaternion.identity);
         grade.GetComponent<Grade>().SetDirection(Direction);
         audioManager.PlaySound(attackSound);
@@ -112,7 +114,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Rigidbody2D.velocity = new Vector2(Horizontal * Speed, Rigidbody2D.velocity.y);
-
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -138,7 +139,7 @@ public class Player : MonoBehaviour
                 ManagerPopUps.tutoria = true;
             }
             SpawnPowerUps spawnScript = FindObjectOfType<SpawnPowerUps>();
-            Debug.Log(spawnScript);
+
             if (spawnScript != null)
             {
                 spawnScript.ShowPowerUp();
@@ -178,7 +179,6 @@ public class Player : MonoBehaviour
 
     private void ApplyPowerUp(string type)
     {
-        Debug.Log(type);
         if (type == "tutoria")
         {
             previousLucky = lucky;
